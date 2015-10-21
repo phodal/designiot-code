@@ -1,0 +1,10 @@
+{
+  "name": "iot-restful-example",
+  "version": "0.0.1",
+  "description": "Internet of Things Example",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
