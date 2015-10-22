@@ -1,20 +1,40 @@
 var express = require('express');
-var app = express();
+var bodyParser = require('body-parser');
 
-app.get('/api', function(req, res){
-    res.send({led: false});
+var app = express();
+app.use(bodyParser());
+
+var data = {led: false};
+
+app.get('/api', function (req, res) {
+    data.method = 'get';
+    res.send(data);
 });
 
 app.post('/api', function (req, res) {
-    res.send({led: false})
+    data.method = 'post';
+    if (req.body.led === true) {
+        data.led = true;
+    } else {
+        data.led = false;
+    }
+    res.send(data);
 });
 
 app.put('/api', function (req, res) {
-    res.send({led: false})
+    data.method = 'put';
+    if (req.body.led === true) {
+        data.led = true;
+    } else {
+        data.led = false;
+    }
+    res.send(data);
 });
 
 app.delete('/api', function (req, res) {
-    res.send({led: false})
+    data.method = 'delete';
+    data = {};
+    res.send(data);
 });
 
 app.listen(3000);
