@@ -1,34 +1,52 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var Database = require('./db');
+var db = new Database();
 
 var app = express();
 app.use(bodyParser.json());
 
-var data = {led: false};
-
 app.get('/api', function (req, res) {
-    data.method = 'get';
-    res.send(data);
+    var payload = {user: 1};
+    db.query(payload, function(results){
+        return res.json(results);
+    });
 });
 
 app.post('/api', function (req, res) {
-    data.method = 'post';
+    var payload = {user: 1};
+    var data = {user: 1, led: true};
     if (req.body.led === true) {
         data.led = true;
-    } else if (req.body.led === false) {
-        data.led = false;
     }
-    res.send(data);
+
+    db.query(payload, function(results){
+        if(results.length>0){
+            db.update(data);
+            res.send({db: "update"});
+        } else {
+            db.insert(data);
+            res.send({db: "insert"});
+        }
+    });
 });
 
 app.put('/api', function (req, res) {
-    data.method = 'put';
+    var payload = {user: 1};
+    var data = {user: 1, led: true};
     if (req.body.led === true) {
         data.led = true;
-    } else if (req.body.led === false) {
-        data.led = false;
     }
-    res.send(data);
+
+    db.query(payload, function(results){
+        if(results.length>0){
+            db.update(data);
+            res.send({db: "update"});
+        } else {
+            db.insert(data);
+            res.send({db: "insert"});
+        }
+    });
 });
 
 app.delete('/api', function (req, res) {
