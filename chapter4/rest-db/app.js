@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 
 app.get('/api', function (req, res) {
     var payload = {user: 1};
-    db.query(payload, function(results){
+    db.find(payload, function(results){
         return res.json(results);
     });
 });
@@ -20,7 +20,7 @@ app.post('/api', function (req, res) {
         data.led = true;
     }
 
-    db.query(payload, function(results){
+    db.find(payload, function(results){
         if(results.length>0){
             db.update(data);
             res.send({db: "update"});
@@ -38,7 +38,7 @@ app.put('/api', function (req, res) {
         data.led = true;
     }
 
-    db.query(payload, function(results){
+    db.find(payload, function(results){
         if(results.length>0){
             db.update(data);
             res.send({db: "update"});

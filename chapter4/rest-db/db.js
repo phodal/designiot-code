@@ -37,7 +37,7 @@ MongoPersistence.prototype.update = function (payload) {
     });
 };
 
-MongoPersistence.prototype.query = function (queryOptions, queryCB) {
+MongoPersistence.prototype.find = function (queryOptions, queryCB) {
     'use strict';
     MongoClient.connect(url, function (err, db) {
         var findDocuments = function (db, query, callback) {
