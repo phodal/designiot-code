@@ -42,7 +42,7 @@ MongoPersistence.prototype.query = function (queryOptions, queryCB) {
     MongoClient.connect(url, function (err, db) {
         var findDocuments = function (db, query, callback) {
             var collection = db.collection("documents");
-            collection.find(query, {_id: false}).toArray(function (err, docs) {
+            collection.find(query).toArray(function (err, docs) {
                 callback(docs);
             });
         };
