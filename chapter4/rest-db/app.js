@@ -20,15 +20,15 @@ app.get('/api/:user_id', function (req, res) {
     });
 });
 
-app.post('/api/:user_id', function (req, res) {
+function updateData(req, res) {
     var payload = {user: req.params.user_id};
     var data = {user: req.params.user_id, led: true};
     if (req.body.led === true) {
         data.led = true;
     }
 
-    db.find(payload, function(results){
-        if(results.length>0){
+    db.find(payload, function (results) {
+        if (results.length > 0) {
             db.update(data);
             res.send({db: "update"});
         } else {
@@ -36,24 +36,14 @@ app.post('/api/:user_id', function (req, res) {
             res.send({db: "insert"});
         }
     });
+}
+
+app.post('/api/:user_id', function (req, res) {
+    updateData(req, res);
 });
 
 app.put('/api/:user_id', function (req, res) {
-    var payload = {user: req.params.user_id};
-    var data = {user: req.params.user_id, led: true};
-    if (req.body.led === true) {
-        data.led = true;
-    }
-
-    db.find(payload, function(results){
-        if(results.length>0){
-            db.update(data);
-            res.send({db: "update"});
-        } else {
-            db.insert(data);
-            res.send({db: "insert"});
-        }
-    });
+    updateData(req, res);
 });
 
 app.delete('/api/:user_id', function (req, res) {
