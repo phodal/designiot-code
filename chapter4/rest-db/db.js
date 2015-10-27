@@ -26,8 +26,7 @@ MongoPersistence.prototype.update = function (payload) {
     MongoClient.connect(url, function (err, db) {
         var updateDocument = function (db, callback) {
             var collection = db.collection("documents");
-            var topic = {user: payload.user};
-            collection.update(topic, {$set: {led: payload.led}}, function (err, result) {
+            collection.update({user: payload.user}, {$set: {led: payload.led}}, function (err, result) {
                 callback(result);
             });
         };
