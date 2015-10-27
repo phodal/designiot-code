@@ -1,10 +1,25 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var path = require('path');
+
 var Database = require('./db');
 var db = new Database();
 
 var app = express();
 app.use(bodyParser.json());
+app.set('views', path.join(__dirname + '/', 'views'));
+app.set('view engine', 'jade');
+
+app.get('/', function (req, res) {
+    'use strict';
+    res.render('index', {
+        title: 'Home'
+    });
+});
+
+app.post('/api/', function (req, res) {
+
+});
 
 app.get('/api/', function (req, res) {
     var payload = {};
