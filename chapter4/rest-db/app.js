@@ -49,10 +49,8 @@ app.put('/api/:user_id', function (req, res) {
     });
 });
 
-app.delete('/api', function (req, res) {
-    data.method = 'delete';
-    data = {};
-    res.send(data);
+app.delete('/api/:user_id', function (req, res) {
+    res.send({});
 });
 
 app.listen(3000);
