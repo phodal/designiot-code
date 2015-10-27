@@ -6,16 +6,16 @@ var db = new Database();
 var app = express();
 app.use(bodyParser.json());
 
-app.get('/api', function (req, res) {
-    var payload = {user: 1};
+app.get('/api/:user_id', function (req, res) {
+    var payload = {user: req.params.user_id};
     db.find(payload, function(results){
         return res.json(results);
     });
 });
 
-app.post('/api', function (req, res) {
-    var payload = {user: 1};
-    var data = {user: 1, led: true};
+app.post('/api/:user_id', function (req, res) {
+    var payload = {user: req.params.user_id};
+    var data = {user: req.params.user_id, led: true};
     if (req.body.led === true) {
         data.led = true;
     }
@@ -31,9 +31,9 @@ app.post('/api', function (req, res) {
     });
 });
 
-app.put('/api', function (req, res) {
-    var payload = {user: 1};
-    var data = {user: 1, led: true};
+app.put('/api/:user_id', function (req, res) {
+    var payload = {user: req.params.user_id};
+    var data = {user: req.params.user_id, led: true};
     if (req.body.led === true) {
         data.led = true;
     }
