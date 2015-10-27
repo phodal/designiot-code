@@ -27,7 +27,7 @@ MongoPersistence.prototype.update = function (payload) {
         var updateDocument = function (db, callback) {
             var collection = db.collection("documents");
             collection.update({user: payload.user}, {$set: {led: payload.led}}, function (err, result) {
-                callback(result);
+                callback();
             });
         };
         updateDocument(db, function () {
