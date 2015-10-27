@@ -22,7 +22,7 @@ app.get('/api/:user_id', function (req, res) {
 
 function updateData(req, res) {
     var payload = {user: req.params.user_id};
-    var data = {user: req.params.user_id, led: true};
+    var data = {user: req.params.user_id, led: false};
     if (req.body.led === true) {
         data.led = true;
     }
