@@ -6,6 +6,13 @@ var db = new Database();
 var app = express();
 app.use(bodyParser.json());
 
+app.get('/api/', function (req, res) {
+    var payload = {};
+    db.find(payload, function(results){
+        return res.json(results);
+    });
+});
+
 app.get('/api/:user_id', function (req, res) {
     var payload = {user: req.params.user_id};
     db.find(payload, function(results){
