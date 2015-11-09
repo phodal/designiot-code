@@ -1,0 +1,15 @@
+doctype html
+html
+    head
+        title= title
+    body
+        form(method="post", action="/")
+            div
+                label(from="user") User
+                input(type='number', name="user")
+            div
+                label(from="led") Led
+                input(type='checkbox', checked=false, name="led")
+
+            input(type="submit", value="OK")
+

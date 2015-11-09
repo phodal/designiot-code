@@ -1,0 +1,13 @@
+{
+  "name": "iot-restful-example",
+  "version": "0.0.1",
+  "description": "Internet of Things Example",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "jade": "~1.11.0",
+    "mongodb": "^2.0.46"
+  }
+}
