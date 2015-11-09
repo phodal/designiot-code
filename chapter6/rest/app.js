@@ -19,6 +19,13 @@ app.get('/', function (req, res) {
     });
 });
 
+app.get('/dashboard', function (req, res) {
+    'use strict';
+    res.render('dashboard', {
+        title: 'Dashboard'
+    });
+});
+
 app.post('/', function (req, res) {
     var userID = req.body.user;
 
@@ -81,4 +88,6 @@ app.delete('/api/:user_id', function (req, res) {
     res.send({});
 });
 
-app.listen(3000);
+app.listen(3000, function () {
+    console.log("server run on http://localhost:%d", 3000);
+});
