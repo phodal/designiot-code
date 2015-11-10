@@ -4,10 +4,6 @@ $(function () {
             text: '月平均气温',
             x: -20 //center
         },
-        subtitle: {
-            text: '来源: WorldClimate.com',
-            x: -20
-        },
         xAxis: {
             categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
