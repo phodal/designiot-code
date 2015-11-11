@@ -20,12 +20,12 @@ app.get('/', function (req, res) {
 });
 
 app.post('/', function (req, res) {
-    var userID = req.body.user;
+    var userId = req.params.user_id;
+    var payload = {user: userId};
 
-    var payload = { user: userID};
-    var led = req.body.led === "on";
+    var data = req.body;
+    data.user = userId;
 
-    var data = { user: userID, led: led};
     db.find(payload, function (results) {
         if (results.length > 0) {
             db.update(data);
@@ -57,7 +57,7 @@ function updateData(req, res) {
 
     var data = req.body;
     data.user = userId;
-
+    
     db.find(payload, function (results) {
         if (results.length > 0) {
             db.update(data);
