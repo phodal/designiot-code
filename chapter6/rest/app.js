@@ -56,6 +56,30 @@ app.post('/api/:user_id/devices/:device_id', function (req, res) {
     res.send({db: "insert"});
 });
 
+app.get('/api/:user_id/devices', function (req, res) {
+    var payload = {user: req.params.user_id, devices: true };
+    db.find(payload, function (results) {
+        return res.json(results);
+    });
+});
+
+app.post('/api/:user_id/devices', function (req, res) {
+    var data = req.body;
+    data.user = req.params.user_id;
+    data.devices = true;
+
+    var payload = {user: req.params.user_id, devices: true };
+    db.find(payload, function (results) {
+        if (results.length > 0) {
+            db.update(data);
+            res.send({db: "update"});
+        } else {
+            db.insert(data);
+            res.send({db: "insert"});
+        }
+    });
+});
+
 app.listen(3000, function () {
     console.log("server run on http://localhost:%d", 3000);
 });
