@@ -34,14 +34,14 @@ app.get('/dashboard', function (req, res) {
 });
 
 app.get('/api/:user_id/devices/:device_id/result/:result_id', function (req, res) {
-    var payload = {user: req.params.user_id, device: req.params.device_id};
+    var payload = {user: parseInt(req.params.user_id), device: parseInt(req.params.device_id)};
     db.findOrder(payload, parseInt(req.params.result_id),  function (results) {
         return res.json(results);
     });
 });
 
 app.get('/api/:user_id/devices/:device_id/results', function (req, res) {
-    var payload = {user: req.params.user_id, device: req.params.device_id};
+    var payload = {user: parseInt(req.params.user_id), device: parseInt(req.params.device_id)};
     db.find(payload, function (results) {
         return res.json(results);
     });
@@ -49,15 +49,15 @@ app.get('/api/:user_id/devices/:device_id/results', function (req, res) {
 
 app.post('/api/:user_id/devices/:device_id', function (req, res) {
     var data = req.body;
-    data.user = req.params.user_id;
-    data.device = req.params.device_id;
+    data.user = parseInt(req.params.user_id);
+    data.device = parseInt(req.params.device_id);
 
     db.insert(data);
     res.send({db: "insert"});
 });
 
 app.get('/api/:user_id/devices', function (req, res) {
-    var payload = {user: req.params.user_id, devices: true };
+    var payload = {user: parseInt(req.params.user_id), devices: true };
     db.find(payload, function (results) {
         return res.json(results);
     });
@@ -65,10 +65,10 @@ app.get('/api/:user_id/devices', function (req, res) {
 
 app.post('/api/:user_id/devices', function (req, res) {
     var data = req.body;
-    data.user = req.params.user_id;
+    data.user = parseInt(req.params.user_id);
     data.devices = true;
 
-    var payload = {user: req.params.user_id, devices: true };
+    var payload = {user: parseInt(req.params.user_id), devices: true };
     db.find(payload, function (results) {
         if (results.length > 0) {
             db.update(data);
