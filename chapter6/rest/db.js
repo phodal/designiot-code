@@ -10,6 +10,7 @@ MongoPersistence.prototype.insert = function (payload) {
     'use strict';
     MongoClient.connect(url, function (err, db) {
         var insertDocuments = function (db, callback) {
+            payload.date = new Date();
             var collection = db.collection("documents");
             collection.insert(payload, function (err, result) {
                 callback(result);
