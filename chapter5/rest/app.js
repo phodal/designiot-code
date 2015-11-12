@@ -59,6 +59,7 @@ function updateData(req, res) {
     data.user = userId;
     
     db.find(payload, function (results) {
+        console.log(results);
         if (results.length > 0) {
             db.update(data);
             res.send({db: "update"});
