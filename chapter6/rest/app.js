@@ -65,6 +65,13 @@ app.get('/api/:user_id', function (req, res) {
     });
 });
 
+app.get('/api/:user_id/devices/:device_id/result/:result_id', function (req, res) {
+    var payload = {user: req.params.user_id, device: req.params.device_id};
+    db.findOrder(payload, parseInt(req.params.result_id),  function (results) {
+        return res.json(results);
+    });
+});
+
 app.get('/api/:user_id/devices/:device_id/results', function (req, res) {
     var payload = {user: req.params.user_id, device: req.params.device_id};
     db.find(payload, function (results) {

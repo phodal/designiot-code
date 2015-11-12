@@ -53,5 +53,22 @@ MongoPersistence.prototype.find = function (queryOptions, queryCB) {
     });
 };
 
+MongoPersistence.prototype.findOrder = function (queryOptions, order, queryCB) {
+    'use strict';
+    MongoClient.connect(url, function (err, db) {
+        var findDocuments = function (db, query, callback) {
+            var collection = db.collection("documents");
+            collection.find(query).limit(1).skip(order).toArray(function (err, docs) {
+                callback(docs);
+            });
+        };
+
+        findDocuments(db, queryOptions, function (result) {
+            db.close();
+            queryCB(result);
+        });
+    });
+};
+
 
 module.exports = MongoPersistence;
