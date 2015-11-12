@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname + '/', 'public')));
 app.set('views', path.join(__dirname + '/', 'views'));
 app.set('view engine', 'jade');
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
@@ -36,10 +36,10 @@ app.get('/dashboard', function (req, res) {
 app.post('/', function (req, res) {
     var userID = req.body.user;
 
-    var payload = { user: userID};
+    var payload = {user: userID};
     var led = req.body.led === "on";
 
-    var data = { user: userID, led: led};
+    var data = {user: userID, led: led};
     db.find(payload, function (results) {
         if (results.length > 0) {
             db.update(data);
@@ -63,6 +63,22 @@ app.get('/api/:user_id', function (req, res) {
     db.find(payload, function (results) {
         return res.json(results);
     });
+});
+
+app.get('/api/:user_id/devices/:device_id/results', function (req, res) {
+    var payload = {user: req.params.user_id, device: req.params.device_id};
+    db.find(payload, function (results) {
+        return res.json(results);
+    });
+});
+
+app.post('/api/:user_id/devices/:device_id', function (req, res) {
+    var data = req.body;
+    data.user = req.params.user_id;
+    data.device = req.params.device_id;
+
+    db.insert(data);
+    res.send({db: "insert"});
 });
 
 function updateData(req, res) {
