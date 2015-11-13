@@ -11,3 +11,10 @@ chapter 2 | 第二章相关代码: Nginx示例、Python基础 | Nginx、Python
 chapter 4 | 基础Web服务器代码、RESTful服务代码    | Node.js、MongoDB
 chapter 5 | 硬件、传感器示例、RESTful服务代码     | Node.js、MongoDB、Arduino
 chapter 6 | RESTful服务器代码、Dashboard代码     | Dashing、HighLight.js
+
+
+##License
+
+© 2015 [Phodal Huang][phodal]. This code is distributed under the MIT license.
+
+[phodal]:http://www.phodal.com/
