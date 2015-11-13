@@ -27,5 +27,5 @@ curl -X DELETE http://localhost:3000/api
 POST Devices:
 
 ```
-curl -X POST -d '{ "led": true,"temperature": 15 }' -H "Content-Type: application/json" http://localhost:3000/api/1/devices/1
+curl -X POST -d '{ "led": true,"temperature": 15 }' -H "Content-Type: application/json" http://localhost:3000/user/1/devices/1
 ```
