@@ -1,6 +1,6 @@
 $(function () {
     var data = [];
-    $.get('/api/1/devices/1/results', function(response){
+    $.get('/user/1/devices/1/results', function(response){
         $.each(response, function(key, val) {
             data.push(val.temperature);
         });
