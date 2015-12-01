@@ -12,17 +12,19 @@ def get_data
   request = Net::HTTP::Get.new(uri.request_uri)
 
   response=http.request(request)
-  result=JSON.parse(response.body)
+  res=JSON.parse(response.body)
 
   index = 0
-  result.map do |data|
+  result = []
+  res.map do |data|
     index = index + 1
-    {x: index , y: data["temperature"].to_i}
+    result.push({x: index , y: data["temperature"].to_i})
   end
+  return result
 end
 
 SCHEDULER.every '2s' do
   points=get_data
-  p points
+  print points
   send_event('tempdata', points: points)
 end
