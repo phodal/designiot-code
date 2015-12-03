@@ -1,24 +1,25 @@
 var awsIot = require('aws-iot-device-sdk');
 
+var thingName = 'Led';
 var thingShadows = awsIot.thingShadow({
     keyPath: 'certs/fa635d3140-private.pem.key',
     certPath: 'certs/fa635d3140-certificate.pem.crt',
     caPath: 'certs/root-CA.crt',
-    clientId: 'phodal',
+    clientId: thingName,
     region: 'us-west-2'
 });
 
 thingShadows.on('connect', function () {
     console.log("Connected...");
-    thingShadows.register('phodal');
+    thingShadows.register(thingName);
 
     // An update right away causes a timeout error, so we wait about 2 seconds
     setTimeout(function () {
         console.log("Updating Led Status...");
-        var led = thingShadows.update('phodal', {
+        var led = thingShadows.update(thingName, {
             "state": {
                 "reported": {
-                    "led": false
+                    "led": true
                 }
             }
         });
