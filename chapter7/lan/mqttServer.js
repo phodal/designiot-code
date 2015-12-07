@@ -31,13 +31,13 @@ module.exports = function (client) {
     client.on('publish', function (packet) {
         console.log("PUBLISH(%s): %j", client.id, packet);
         for (var k in self.clients) {
-            var c = self.clients[k];
+            var client = self.clients[k];
 
-            for (var i = 0; i < c.subscriptions.length; i++) {
-                var s = c.subscriptions[i];
+            for (var i = 0; i < client.subscriptions.length; i++) {
+                var subscription = client.subscriptions[i];
 
-                if (s.test(packet.topic)) {
-                    c.publish({topic: packet.topic, payload: packet.payload});
+                if (subscription.test(packet.topic)) {
+                    client.publish({topic: packet.topic, payload: packet.payload});
                     break;
                 }
             }
