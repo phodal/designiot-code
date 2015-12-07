@@ -5,6 +5,9 @@ var path = require('path');
 var Database = require('./db');
 var db = new Database();
 
+var mqtt = require('mqtt');
+var mqttServer = require('./mqttServer');
+
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -82,4 +85,8 @@ app.post('/user/:user_id/devices', function (req, res) {
 
 app.listen(3000, function () {
     console.log("server run on http://localhost:%d", 3000);
+});
+
+mqtt.MqttServer(mqttServer).listen(1883, function () {
+    console.log("mqtt server listening on port %d", 1883);
 });
