@@ -1,3 +1,6 @@
+#Lan IoT
+
+##HTTP 
 
 GET请求:
 
@@ -28,4 +31,18 @@ POST Devices:
 
 ```
 curl -X POST -d '{ "led": true,"temperature": 15 }' -H "Content-Type: application/json" http://localhost:3000/user/1/devices/1
+```
+
+##MQTT
+
+publish
+
+```
+mosquitto_pub -t 'test/topic' -m 45 -q 1
+```
+
+subscribe
+
+```
+mosquitto_sub -v -t 'test/topic'
 ```
