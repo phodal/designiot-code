@@ -24,6 +24,17 @@ module.exports = function (client) {
                 , topic = packet.subscriptions[i].topic
                 , reg = new RegExp(topic.replace('+', '[^\/]+').replace('#', '.+') + '$');
 
+            var myJson = topic.split('/');
+            if (myJson[0] && myJson[1] && myJson[0] === 'device') {
+                var deviceId = parseInt(myJson[1]);
+                if (deviceId > 0) {
+                    var payload = {user: 1, device: deviceId};
+                    db.findOrder(payload, parseInt(deviceId), function (results) {
+                        granted.push(results);
+                        client.subscriptions.push(results)
+                    });
+                }
+            }
             granted.push(qos);
             client.subscriptions.push(reg);
         }
