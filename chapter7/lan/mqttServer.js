@@ -16,7 +16,6 @@ module.exports = function (client) {
 
     client.on('subscribe', function (packet) {
         var granted = [];
-
         console.log("SUBSCRIBE(%s): %j", client.id, packet);
 
         for (var i = 0; i < packet.subscriptions.length; i++) {

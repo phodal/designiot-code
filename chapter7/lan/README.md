@@ -46,3 +46,10 @@ subscribe
 ```
 mosquitto_sub -v -t 'test/topic'
 ```
+
+mqtt.js
+
+```
+mqtt sub -v -t 'device/2'
+mqtt pub -t 'device/2' -m 35
+```    
