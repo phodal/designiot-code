@@ -1,3 +1,6 @@
+var Database = require('./db');
+var db = new Database();
+
 module.exports = function (client) {
     var self = this;
 
@@ -29,7 +32,7 @@ module.exports = function (client) {
     });
 
     client.on('publish', function (packet) {
-        console.log("PUBLISH(%s): %j", client.id, packet);
+        console.log("PUBLISH(%s): %j", packet.clientId, packet);
         for (var k in self.clients) {
             var client = self.clients[k];
 
