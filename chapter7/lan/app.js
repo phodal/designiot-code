@@ -8,6 +8,9 @@ var db = new Database();
 var mqtt = require('mqtt');
 var mqttServer = require('./mqttServer');
 
+var coap = require('coap');
+var coapServer = require('./coapServer');
+
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -89,4 +92,8 @@ app.listen(3000, function () {
 
 mqtt.MqttServer(mqttServer).listen(1883, function () {
     console.log("mqtt server listening on port %d", 1883);
+});
+
+coap.createServer(coapServer).listen(5683, function () {
+    console.log("coap server listening on port %d", 5683);
 });

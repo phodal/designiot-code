@@ -6,6 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.14.1",
+    "coap": "^0.12.1",
     "express": "^4.13.3",
     "jade": "~1.11.0",
     "mongodb": "^2.0.46",
