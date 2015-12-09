@@ -53,3 +53,23 @@ mqtt.js
 mqtt sub -v -t 'device/2'
 mqtt pub -t 'device/2' -m 35
 ```    
+
+##CoAP
+
+get
+
+```bash
+coap-client -m get 'coap://127.0.0.1:5683/topic?user:1&device:1'
+```
+
+put
+
+```bash
+coap-client -m put 'coap://127.0.0.1:5683/topic?user:1&device:1'
+```
+
+post
+
+```bash
+coap-client -m post 'coap://127.0.0.1:5683/topic?user:1&device:1'
+```
