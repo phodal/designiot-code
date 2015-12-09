@@ -23,6 +23,7 @@ module.exports = function (client) {
         if(!/device\/(\d)/.test(topic) || /device\/(\d)/.exec(topic).length < 1){
             return client.connack({returnCode: 6});
         }
+        console.log("SUBSCRIBE(%s): %j", client.id, packet);
         var deviceId = parseInt(/device\/(\d)/.exec(topic)[1]);
         var payload = {user: parseInt(user), device: deviceId};
         db.subscribe(payload, function (results) {
@@ -34,7 +35,23 @@ module.exports = function (client) {
     });
 
     client.on('publish', function (packet) {
+        var topic = packet.topic.toString();
+        if(!/device\/(\d)/.test(topic) || /device\/(\d)/.exec(topic).length < 1){
+            return client.connack({returnCode: 6});
+        }
         console.log("PUBLISH(%s): %j", packet.clientId, packet);
+        var deviceId = parseInt(/device\/(\d)/.exec(topic)[1]);
+
+        var payload;
+        try {
+            payload = JSON.parse(packet.payload);
+        } catch (err) {
+            console.log(err);
+            return client.connack({returnCode: 6});
+        }
+        payload.user = parseInt(user);
+        payload.device = deviceId;
+        db.insert(payload);
     });
 
     client.on('pingreq', function (packet) {
