@@ -7,11 +7,12 @@ module.exports = function (req, res) {
         res.end(JSON.stringify({method: 'not support'}));
     };
 
-    var uriQuery = [];
+    var uriQuery = {};
     var existBlock = false;
-    for (var i = 1; i < req.options.length; i++) {
+    for (var i = 0; i < req.options.length; i++) {
         if (req.options[i].name === 'Uri-Query') {
-            uriQuery.push(req.options[i].value.toString());
+            var query = req.options[i].value.toString().split(':');
+            uriQuery[query[0]] = parseInt(query[1]);
             existBlock = true;
         }
     }
@@ -20,9 +21,8 @@ module.exports = function (req, res) {
     }
 
     var handlerGet = function () {
-        var payload = {user: 1, device: 1};
-        db.findOrder(payload, 1, function (dbResult) {
-            console.log(dbResult);
+        var payload = {user: uriQuery.user, device: uriQuery.device};
+        db.find(payload, function (dbResult) {
             res.code = '2.05';
             res.end(JSON.stringify({result: dbResult}));
         });
