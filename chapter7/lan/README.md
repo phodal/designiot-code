@@ -38,13 +38,13 @@ curl -X POST -d '{ "led": true,"temperature": 15 }' -H "Content-Type: applicatio
 publish
 
 ```
-mosquitto_pub -t 'user/1/device/1' -m 45 -q 1 -u root
+mosquitto_pub -t 'device/2' -m '{"temperature":3}' -u 1
 ```
 
 subscribe
 
 ```
-mosquitto_sub -v -t 'test/topic'  -u root
+mosquitto_sub -v -t 'test/topic' -u 1
 ```
 
 mqtt.js
