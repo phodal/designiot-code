@@ -3,6 +3,7 @@ var db = new Database();
 
 module.exports = function (client) {
     var self = this;
+    var user = null;
 
     if (!self.clients) self.clients = {};
 
@@ -10,11 +11,15 @@ module.exports = function (client) {
         self.clients[packet.clientId] = client;
         client.id = packet.clientId;
         console.log("CONNECT: client id: " + client.id);
+        if (packet.username === undefined) {
+            client.connack({returnCode: 4});
+        }
+        user = packet.username;
         client.connack({returnCode: 0});
     });
 
     client.on('subscribe', function (packet) {
-        var payload = {user: 1, device: 1};
+        var payload = {user: parseInt(user), device: 1};
         db.subscribe(payload, function (results) {
             var topic = packet.subscriptions[0].topic.toString();
             client.publish({
