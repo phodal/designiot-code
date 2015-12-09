@@ -1,7 +1,14 @@
+var Database = require('./db');
+var db = new Database();
+
 module.exports = function (req, res) {
     var handlerGet = function () {
-        res.code = '2.05';
-        res.end(JSON.stringify({method: 'get'}));
+        var payload = {user: 1, device: 1};
+        db.findOrder(payload, 1, function (dbResult) {
+            console.log(dbResult);
+            res.code = '2.05';
+            res.end(JSON.stringify({result: dbResult}));
+        });
     };
 
     var handPut = function () {
