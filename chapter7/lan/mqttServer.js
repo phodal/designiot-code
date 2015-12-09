@@ -15,7 +15,7 @@ module.exports = function (client) {
 
     client.on('subscribe', function (packet) {
         var payload = {user: 1, device: 1};
-        db.findOrder(payload, 1, function (results) {
+        db.subscribe(payload, function (results) {
             var topic = packet.subscriptions[0].topic.toString();
             client.publish({
                 topic: topic,

@@ -72,4 +72,21 @@ MongoPersistence.prototype.findOrder = function (queryOptions, order, queryCB) {
 };
 
 
+MongoPersistence.prototype.subscribe = function (queryOptions, queryCB) {
+    'use strict';
+    MongoClient.connect(url, function (err, db) {
+        var subDocuments = function (db, query, callback) {
+            var collection = db.collection("documents");
+            collection.find(query).sort({$natural: 1}).limit(1).toArray(function (err, doc) {
+                callback(doc);
+            });
+        };
+
+        subDocuments(db, queryOptions, function (result) {
+            db.close();
+            queryCB(result);
+        });
+    });
+};
+
 module.exports = MongoPersistence;
