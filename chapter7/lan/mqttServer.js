@@ -10,51 +10,22 @@ module.exports = function (client) {
         self.clients[packet.clientId] = client;
         client.id = packet.clientId;
         console.log("CONNECT: client id: " + client.id);
-        client.subscriptions = [];
         client.connack({returnCode: 0});
     });
 
     client.on('subscribe', function (packet) {
-        var granted = [];
-        console.log("SUBSCRIBE(%s): %j", client.id, packet);
-
-        for (var i = 0; i < packet.subscriptions.length; i++) {
-            var qos = packet.subscriptions[i].qos
-                , topic = packet.subscriptions[i].topic
-                , reg = new RegExp(topic.replace('+', '[^\/]+').replace('#', '.+') + '$');
-
-            var myJson = topic.split('/');
-            if (myJson[0] && myJson[1] && myJson[0] === 'device') {
-                var deviceId = parseInt(myJson[1]);
-                if (deviceId > 0) {
-                    var payload = {user: 1, device: deviceId};
-                    db.findOrder(payload, parseInt(deviceId), function (results) {
-                        granted.push(results);
-                        client.subscriptions.push(results)
-                    });
-                }
-            }
-            granted.push(qos);
-            client.subscriptions.push(reg);
-        }
-
-        client.suback({messageId: packet.messageId, granted: granted});
+        var payload = {user: 1, device: 1};
+        db.findOrder(payload, 1, function (results) {
+            var topic = packet.subscriptions[0].topic.toString();
+            client.publish({
+                topic: topic,
+                payload: JSON.stringify(results)
+            });
+        });
     });
 
     client.on('publish', function (packet) {
         console.log("PUBLISH(%s): %j", packet.clientId, packet);
-        for (var k in self.clients) {
-            var client = self.clients[k];
-
-            for (var i = 0; i < client.subscriptions.length; i++) {
-                var subscription = client.subscriptions[i];
-
-                if (subscription.test(packet.topic)) {
-                    client.publish({topic: packet.topic, payload: packet.payload});
-                    break;
-                }
-            }
-        }
     });
 
     client.on('pingreq', function (packet) {
