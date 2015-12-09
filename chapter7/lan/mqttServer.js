@@ -19,9 +19,13 @@ module.exports = function (client) {
     });
 
     client.on('subscribe', function (packet) {
-        var payload = {user: parseInt(user), device: 1};
+        var topic = packet.subscriptions[0].topic.toString();
+        if(!/device\/(\d)/.test(topic) || /device\/(\d)/.exec(topic).length < 1){
+            return client.connack({returnCode: 6});
+        }
+        var deviceId = parseInt(/device\/(\d)/.exec(topic)[1]);
+        var payload = {user: parseInt(user), device: deviceId};
         db.subscribe(payload, function (results) {
-            var topic = packet.subscriptions[0].topic.toString();
             client.publish({
                 topic: topic,
                 payload: JSON.stringify(results)
