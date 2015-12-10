@@ -33,7 +33,10 @@ module.exports = function (req, res) {
         var deviceId = parseInt(uriQuery.device);
         var payload = {user: userId, device: deviceId};
 
-        console.log(req.payload.toString());
+        if(isNaN(userId) || isNaN(deviceId)){
+            res.code = '4.03';
+            return res.end(JSON.stringify({"error": "username or device undefined"}));
+        }
 
         var data;
         try {
@@ -43,7 +46,7 @@ module.exports = function (req, res) {
             res.end(err);
         }
         data.user = userId;
-        data.devices = deviceId;
+        data.device = deviceId;
 
         db.find(payload, function (results) {
             if (results.length > 0) {
@@ -52,6 +55,7 @@ module.exports = function (req, res) {
                 res.end(JSON.stringify({method: 'update'}));
             } else {
                 db.insert(data);
+                res.code = '2.05';
                 res.end(JSON.stringify({method: 'insert'}));
             }
         });
@@ -62,17 +66,20 @@ module.exports = function (req, res) {
         var deviceId = parseInt(uriQuery.device);
         var payload = {user: userId, device: deviceId};
 
-        console.log(req.payload.toString());
-
+        console.log(userId, deviceId);
+        if(isNaN(userId) || isNaN(deviceId)){
+            res.code = '4.03';
+            return res.end(JSON.stringify({"error": "username or device undefined"}));
+        }
         var data;
         try {
             data = JSON.parse(req.payload.toString());
         } catch (err) {
             res.code = '4.04';
-            res.end(err);
+            return res.end(err);
         }
         data.user = userId;
-        data.devices = deviceId;
+        data.device = deviceId;
 
         db.find(payload, function (results) {
             if (results.length > 0) {
@@ -81,6 +88,7 @@ module.exports = function (req, res) {
                 res.end(JSON.stringify({method: 'update'}));
             } else {
                 db.insert(data);
+                res.code = '2.05';
                 res.end(JSON.stringify({method: 'insert'}));
             }
         });
