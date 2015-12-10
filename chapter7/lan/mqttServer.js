@@ -67,6 +67,19 @@ module.exports = function (client) {
         payload.user = parseInt(user);
         payload.device = deviceId;
         db.insert(payload);
+
+        for (var k in self.clients) {
+            var _client = self.clients[k];
+
+            for (var i = 0; i < _client.subscriptions.length; i++) {
+                var subscription = _client.subscriptions[i];
+
+                if (subscription.test(packet.topic)) {
+                    _client.publish({topic: packet.topic, payload: payload});
+                    break;
+                }
+            }
+        }
     });
 
     client.on('pingreq', function (packet) {
