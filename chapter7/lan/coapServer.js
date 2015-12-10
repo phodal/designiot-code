@@ -28,12 +28,12 @@ module.exports = function (req, res) {
         });
     };
 
-    var handPut = function () {
+    var handlePut = function () {
         res.code = '2.05';
         res.end(JSON.stringify({method: 'put'}));
     };
 
-    var handPost = function () {
+    var handlePost = function () {
         var userId = parseInt(uriQuery.user);
         var deviceId = parseInt(uriQuery.device);
         var payload = {user: userId, device: deviceId};
@@ -67,10 +67,10 @@ module.exports = function (req, res) {
             handlerGet();
             break;
         case 'PUT':
-            handPut();
+            handlePut();
             break;
         case 'POST':
-            handPost();
+            handlePost();
             break;
         default:
             return errorHandle();
