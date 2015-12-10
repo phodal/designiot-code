@@ -15,6 +15,7 @@ module.exports = function (client) {
             client.connack({returnCode: 4});
         }
         user = packet.username;
+        client.subscriptions = [];
         client.connack({returnCode: 0});
     });
 
@@ -26,6 +27,19 @@ module.exports = function (client) {
         console.log("SUBSCRIBE(%s): %j", client.id, packet);
         var deviceId = parseInt(/device\/(\d)/.exec(topic)[1]);
         var payload = {user: parseInt(user), device: deviceId};
+        var granted = [];
+        for (var i = 0; i < packet.subscriptions.length; i++) {
+            var qos = packet.subscriptions[i].qos
+                , topic = packet.subscriptions[i].topic
+                , reg = new RegExp(topic.replace('+', '[^\/]+').replace('#', '.+') + '$');
+
+            granted.push(qos);
+            client.subscriptions.push(reg);
+            console.log(reg);
+        }
+
+        client.suback({messageId: packet.messageId, granted: granted});
+
         db.subscribe(payload, function (results) {
             client.publish({
                 topic: topic,
