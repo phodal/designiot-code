@@ -4,7 +4,7 @@ var db = new Database();
 module.exports = function (client) {
     var self = this;
     var user = null;
-    
+
     if (!self.clients) self.clients = {};
 
     client.on('connect', function (packet) {

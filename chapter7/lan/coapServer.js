@@ -29,8 +29,32 @@ module.exports = function (req, res) {
     };
 
     var handlePut = function () {
-        res.code = '2.05';
-        res.end(JSON.stringify({method: 'put'}));
+        var userId = parseInt(uriQuery.user);
+        var deviceId = parseInt(uriQuery.device);
+        var payload = {user: userId, device: deviceId};
+
+        console.log(req.payload.toString());
+
+        var data;
+        try {
+            data = JSON.parse(req.payload.toString());
+        } catch (err) {
+            res.code = '4.04';
+            res.end(err);
+        }
+        data.user = userId;
+        data.devices = deviceId;
+
+        db.find(payload, function (results) {
+            if (results.length > 0) {
+                db.update(data);
+                res.code = '2.05';
+                res.end(JSON.stringify({method: 'update'}));
+            } else {
+                db.insert(data);
+                res.end(JSON.stringify({method: 'insert'}));
+            }
+        });
     };
 
     var handlePost = function () {
