@@ -4,7 +4,7 @@ var db = new Database();
 module.exports = function (client) {
     var self = this;
     var user = null;
-
+    
     if (!self.clients) self.clients = {};
 
     client.on('connect', function (packet) {
@@ -36,11 +36,12 @@ module.exports = function (client) {
 
     client.on('publish', function (packet) {
         var topic = packet.topic.toString();
-        if(!/device\/(\d)/.test(topic) || /device\/(\d)/.exec(topic).length < 1){
+        var topicRegex = /device\/(\d)/;
+        if(!topicRegex.test(topic) || topicRegex.exec(topic).length < 1){
             return client.connack({returnCode: 6});
         }
         console.log("PUBLISH(%s): %j", packet.clientId, packet);
-        var deviceId = parseInt(/device\/(\d)/.exec(topic)[1]);
+        var deviceId = parseInt(topicRegex.exec(topic)[1]);
 
         var payload;
         try {
