@@ -33,7 +33,7 @@ module.exports = function (req, res) {
         var deviceId = parseInt(uriQuery.device);
         var payload = {user: userId, device: deviceId};
 
-        if(isNaN(userId) || isNaN(deviceId)){
+        if (isNaN(userId) || isNaN(deviceId)) {
             res.code = '4.03';
             return res.end(JSON.stringify({"error": "username or device undefined"}));
         }
@@ -67,7 +67,7 @@ module.exports = function (req, res) {
         var payload = {user: userId, device: deviceId};
 
         console.log(userId, deviceId);
-        if(isNaN(userId) || isNaN(deviceId)){
+        if (isNaN(userId) || isNaN(deviceId)) {
             res.code = '4.03';
             return res.end(JSON.stringify({"error": "username or device undefined"}));
         }

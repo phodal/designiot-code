@@ -20,7 +20,7 @@ module.exports = function (client) {
 
     client.on('subscribe', function (packet) {
         var topic = packet.subscriptions[0].topic.toString();
-        if(!/device\/(\d)/.test(topic) || /device\/(\d)/.exec(topic).length < 1){
+        if (!/device\/(\d)/.test(topic) || /device\/(\d)/.exec(topic).length < 1) {
             return client.connack({returnCode: 6});
         }
         console.log("SUBSCRIBE(%s): %j", client.id, packet);
@@ -37,7 +37,7 @@ module.exports = function (client) {
     client.on('publish', function (packet) {
         var topic = packet.topic.toString();
         var topicRegex = /device\/(\d)/;
-        if(!topicRegex.test(topic) || topicRegex.exec(topic).length < 1){
+        if (!topicRegex.test(topic) || topicRegex.exec(topic).length < 1) {
             return client.connack({returnCode: 6});
         }
         console.log("PUBLISH(%s): %j", packet.clientId, packet);
