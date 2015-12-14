@@ -7,6 +7,7 @@ module.exports = function (req, res) {
         res.end(JSON.stringify({method: 'not support'}));
     };
 
+    // 1. URI Query
     var uriQuery = {};
     var existBlock = false;
     for (var i = 0; i < req.options.length; i++) {
@@ -19,7 +20,11 @@ module.exports = function (req, res) {
     if (!existBlock) {
         return errorHandle();
     }
-
+    // 2. RESTful API方法
+    //var urlArray = req.url.split("/");
+    //for (var i = 1; i < urlArray.length; i = i + 2) {
+    //    uriQuery[urlArray[i]] = parseInt(urlArray[i + 1]);
+    //}
     var handlerGet = function () {
         var payload = {user: uriQuery.user, device: uriQuery.device};
         db.find(payload, function (dbResult) {
