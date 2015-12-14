@@ -11,7 +11,8 @@ module.exports = function (req, res) {
     var existBlock = false;
     for (var i = 0; i < req.options.length; i++) {
         if (req.options[i].name === 'Uri-Query') {
-            var query = req.options[i].value.toString().split(':');
+            console.log()
+            var query = req.options[i].value.toString().split('=');
             uriQuery[query[0]] = parseInt(query[1]);
             existBlock = true;
         }

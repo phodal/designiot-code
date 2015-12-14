@@ -59,17 +59,17 @@ mqtt pub -t 'device/2' -m 35
 get
 
 ```bash
-coap-client -m get 'coap://127.0.0.1:5683/topic?user:1&device:1'
+coap-client -m get 'coap://127.0.0.1:5683/topic?user=1&device=1'
 ```
 
 put
 
 ```bash
-coap-client -e '{"temperature": 3}' -m put 'coap://127.0.0.1:5683/topic?user:1&device:1'
+coap-client -e '{"temperature": 3}' -m put 'coap://127.0.0.1:5683/topic?user=1&device=1'
 ```
 
 post
 
 ```bash
-coap-client -e '{"temperature": 3}' -m post 'coap://127.0.0.1:5683/topic?user:1&device:1'
+coap-client -e '{"temperature": 3}' -m post 'coap://127.0.0.1:5683/topic?user=1&device=1'
 ```
