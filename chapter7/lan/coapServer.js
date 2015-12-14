@@ -34,7 +34,7 @@ module.exports = function (req, res) {
         var payload = {user: userId, device: deviceId};
 
         if (isNaN(userId) || isNaN(deviceId)) {
-            res.code = '4.03';
+            res.code = '4.01';
             return res.end(JSON.stringify({"error": "username or device undefined"}));
         }
 
@@ -51,11 +51,11 @@ module.exports = function (req, res) {
         db.find(payload, function (results) {
             if (results.length > 0) {
                 db.update(data);
-                res.code = '2.05';
+                res.code = '2.01';
                 res.end(JSON.stringify({method: 'update'}));
             } else {
                 db.insert(data);
-                res.code = '2.05';
+                res.code = '2.01';
                 res.end(JSON.stringify({method: 'insert'}));
             }
         });
@@ -68,7 +68,7 @@ module.exports = function (req, res) {
 
         console.log(userId, deviceId);
         if (isNaN(userId) || isNaN(deviceId)) {
-            res.code = '4.03';
+            res.code = '4.04';
             return res.end(JSON.stringify({"error": "username or device undefined"}));
         }
         var data;
@@ -84,11 +84,11 @@ module.exports = function (req, res) {
         db.find(payload, function (results) {
             if (results.length > 0) {
                 db.update(data);
-                res.code = '2.05';
+                res.code = '2.01';
                 res.end(JSON.stringify({method: 'update'}));
             } else {
                 db.insert(data);
-                res.code = '2.05';
+                res.code = '2.01';
                 res.end(JSON.stringify({method: 'insert'}));
             }
         });
