@@ -66,7 +66,6 @@ module.exports = function (req, res) {
         var deviceId = parseInt(uriQuery.device);
         var payload = {user: userId, device: deviceId};
 
-        console.log(userId, deviceId);
         if (isNaN(userId) || isNaN(deviceId)) {
             res.code = '4.04';
             return res.end(JSON.stringify({"error": "username or device undefined"}));
