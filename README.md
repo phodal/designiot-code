@@ -14,6 +14,8 @@ chapter 8 | 自然语言处理示例                    | JavaScript
 app       | 移动应用相关代码                    | Cordova、JavaScript
 dashboard | 仪表盘相关代码                      | Ruby、CoffeeScript
 
+APP 相关代码下载 [http://github.com/designiot/app](http://github.com/designiot/app)
+
 ##License
 
 © 2015 [Phodal Huang][phodal]. This code is distributed under the MIT license.
